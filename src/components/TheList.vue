@@ -62,7 +62,6 @@
 <br>
 
 <table class="table">
-    {{ pairsList }}
     <tr>
         <th>ID</th>
         <th>Devises</th>

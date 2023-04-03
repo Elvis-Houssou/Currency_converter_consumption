@@ -8,15 +8,13 @@
                 pairsList: [],
                 value: 0,
                 result: 0,
-                rate: [],
-                convertion: [],
-                // id: undefined,
+                selected: "",
             }
         },
         methods: {
             async getData() {
 
-                const res = await(await fetch(`${API_URL}/get/pair/${this.getCurrentUser(this.storageName).token}`, {})).json();
+                const res = await(await fetch(`${API_URL}/get/pair/`, {})).json();
 
                 console.log(res);
 
@@ -30,16 +28,10 @@
             },
 
             async calculer() {
-              this.pairsList.forEach(e => {
-                this.convertion =e.convertion_rate ;
-                console.log(e);
-              });
-                this.result = this.value * this.convertion;
-                console.log(this.convertion);
-
-                // this.convertion.forEach(i => {
-
-                // })
+                this.pairsList.forEach(() => {
+                    
+                    this.result = this.value * this.selected;
+                });
             },
         },
         created() {
@@ -49,6 +41,7 @@
 </script>
 <template>
   <div>
+    <h1>Convertisseur de Devise</h1>
     <form action="" class="convert">
             <div class="field_column">
                 <label for="">Montant</label>
@@ -69,8 +62,8 @@
             <div class="field_column">
                 <label for="">Vers</label>
                 <div>
-                  <select name="" id="">
-                    <option v-for='(data, index) in pairsList' :key="index" :value="data.id">{{ data.firstCurrency + "->" + data.secondCurrency  }}</option>
+                  <select name="" id="" v-model="selected">
+                    <option v-for='(data, index) in pairsList' :key="index" :value="data.convertion_rate.value">{{ data.firstCurrency + "->" + data.secondCurrency  }}</option>
                   </select>
                 </div>
             </div>
@@ -82,7 +75,7 @@
   </div>
 
   <!-- {{ pairsList }} -->
-  {{ result }}
+  <h2 id="result">{{ result }}</h2>
 </template>
 
 <style scoped>
@@ -92,22 +85,7 @@
     align-items: center;
 }
 
-.head {
-    display: flex;
-}
 
-.head #sur{
-    /* text-decoration: underline; */
-    text-decoration: overline;
-}
-
-.head a{
-    margin: 2rem;
-}
-
-.head a li{
-    list-style: none;
-}
 
 .field_column  {
     padding: 2rem;
